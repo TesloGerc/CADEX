@@ -18,10 +18,13 @@ constexpr Point Circle::GetPoint(double t) const noexcept
   return Point(x,y);
 }
 
-constexpr double Circle::GetFirstDerivative(double t) const noexcept 
+constexpr Derivative Circle::GetFirstDerivative(double t) const noexcept 
 {
-    //TODO
-  return - std::cos(t)/std::sin(t);
+  double dxdt = - radius * std::sin(t);
+  double dydt = radius * std::cos(t);
+  double dzdt = 0;
+
+  return Derivative(dxdt,dydt,dzdt);
 }
 
 constexpr CURVE_TYPE Circle::GetType() const noexcept 

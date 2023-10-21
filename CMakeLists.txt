@@ -11,6 +11,7 @@ add_executable(CADEX
                                   Curve/Ellipse.cpp
                                   Curve/Helix.cpp
                                   Curve/Point.cpp
+                                  Curve/Derivative.cpp
                                   )
 
 target_compile_options(CADEX PRIVATE

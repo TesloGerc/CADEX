@@ -10,7 +10,7 @@ public:
     Ellipse(double xr,double yr);
 
     constexpr virtual Point GetPoint(double t) const noexcept override;
-    constexpr virtual double GetFirstDerivative(double t) const noexcept override;
+    constexpr virtual Derivative GetFirstDerivative(double t) const noexcept override;
     constexpr virtual CURVE_TYPE GetType() const noexcept override;
 private:
     double xRadius;

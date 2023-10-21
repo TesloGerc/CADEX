@@ -19,10 +19,13 @@ constexpr Point Ellipse::GetPoint(double t) const noexcept
   return Point(x,y);
 }
 
-constexpr double Ellipse::GetFirstDerivative(double t) const noexcept 
+constexpr Derivative Ellipse::GetFirstDerivative(double t) const noexcept 
 {
-    //TODO
-  return - (yRadius / xRadius) * std::cos(t)/std::sin(t);
+  double dxdt = - xRadius * std::sin(t);
+  double dydt = yRadius * std::cos(t);
+  double dzdt = 0;
+
+  return Derivative(dxdt,dydt,dzdt);
 }
 
 constexpr CURVE_TYPE Ellipse::GetType() const noexcept 

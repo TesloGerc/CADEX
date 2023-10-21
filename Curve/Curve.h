@@ -3,6 +3,7 @@
 #include <cmath>
 
 #include "Point.h"
+#include "Derivative.h"
 
 enum CURVE_TYPE
 {
@@ -15,7 +16,7 @@ class Curve
 {
 public:
     constexpr virtual Point GetPoint(double t) const noexcept = 0;
-    constexpr virtual double GetFirstDerivative(double t) const noexcept = 0;
+    constexpr virtual Derivative GetFirstDerivative(double t) const noexcept = 0;
 
     constexpr virtual CURVE_TYPE GetType() const noexcept = 0;
 };

@@ -20,10 +20,13 @@ constexpr Point Helix::GetPoint(double t) const noexcept
   return Point(x,y,z);
 }
 
-constexpr double Helix::GetFirstDerivative(double t) const noexcept 
+constexpr Derivative Helix::GetFirstDerivative(double t) const noexcept 
 {
-    //TODO
-  return - std::cos(t)/std::sin(t);
+  double dxdt = - radius * std::sin(t);
+  double dydt = radius * std::cos(t);
+  double dzdt = step;
+
+  return Derivative(dxdt,dydt,dzdt);
 }
 
 constexpr CURVE_TYPE Helix::GetType() const noexcept 
