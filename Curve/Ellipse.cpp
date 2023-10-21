@@ -32,3 +32,8 @@ constexpr CURVE_TYPE Ellipse::GetType() const noexcept
 { 
   return CURVE_TYPE::ELLIPSE; 
 }
+
+constexpr const char* Ellipse::GetTypeName() const noexcept
+{
+  return "Ellipse";
+}

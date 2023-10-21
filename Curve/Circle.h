@@ -14,7 +14,7 @@ public:
     constexpr virtual CURVE_TYPE GetType() const noexcept override;
 
     constexpr double GetRadius() {return radius;};
-
+    constexpr virtual const char* GetTypeName() const noexcept;
 private:
     double radius;
 };

@@ -19,4 +19,8 @@ public:
     constexpr virtual Derivative GetFirstDerivative(double t) const noexcept = 0;
 
     constexpr virtual CURVE_TYPE GetType() const noexcept = 0;
+    constexpr virtual const char* GetTypeName() const noexcept = 0;
 };
+
+
+

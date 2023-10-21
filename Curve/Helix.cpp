@@ -33,3 +33,8 @@ constexpr CURVE_TYPE Helix::GetType() const noexcept
 { 
   return CURVE_TYPE::HELIX; 
 }
+
+constexpr const char* Helix::GetTypeName() const noexcept
+{
+  return "Helix";
+}

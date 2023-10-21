@@ -10,54 +10,15 @@
 #include "Curve/Circle.h"
 #include "Curve/Ellipse.h"
 #include "Curve/Helix.h"
-
-
-
-std::unique_ptr<Curve> CreateRandomCurve()
-{
-    int type = std::rand()%3;
-    switch (type)
-    {
-    case CURVE_TYPE::CIRCLE:
-        return std::make_unique<Circle>(rand());
-        break;
-    case CURVE_TYPE::ELLIPSE:
-        return std::make_unique<Ellipse>(rand(),rand());
-        break;
-    case CURVE_TYPE::HELIX:
-        return std::make_unique<Helix>(rand(),rand());
-        break;
-    default:
-        return nullptr;
-        break;
-    } 
-}
-
-std::string PrintCurveType(CURVE_TYPE type)
-{
-    switch (type)
-    {
-    case CURVE_TYPE::CIRCLE:
-        return "Circle";
-        break;
-    case CURVE_TYPE::ELLIPSE:
-        return "Ellipse";
-        break;
-    case CURVE_TYPE::HELIX:
-        return "Helix";
-        break;
-    default:
-        return nullptr;
-        break;
-    }
-}
+#include "Curve/Utils.h"
 
 std::vector<std::shared_ptr<Curve>> CreateRandomCurves(int count)
 {
+    std::srand(std::time(NULL));
     std::vector<std::shared_ptr<Curve>> curves(count);
 
     for(auto& c : curves)
-        c = CreateRandomCurve();
+        c = Utils::MakeCurve(std::rand()%3);
 
     return curves;
 }
@@ -68,7 +29,7 @@ void Print(const std::vector<std::shared_ptr<Curve>>& curves)
     for(const auto& c : curves)
     {
         const double t = std::numbers::pi / 4;
-        std::cout << PrintCurveType(c.get()->GetType()) << "\t->\t" 
+        std::cout << c.get()->GetTypeName() << "\t->\t" 
                     << c.get() << "\t:\t"
                     << c.get()->GetPoint(t) << "\t"
                     << c.get()->GetFirstDerivative(t)
@@ -82,16 +43,25 @@ std::vector<std::shared_ptr<Curve>> SelectCircles(const std::vector<std::shared_
     for(const auto& c : curves)
     {
         if(c.get()->GetType() == CURVE_TYPE::CIRCLE)
-        {
             circles.push_back(c);
-        }
     }
     return circles;
 }
 
+void SortByRaius(std::vector<std::shared_ptr<Circle>>& circles)
+{
+    std::sort(circles.begin(),circles.end(),
+                    [](auto a, auto b){return a.get()->GetRadius() < b.get()->GetRadius();});
+}
+
+double ComputeSumOfRadii(std::vector<std::shared_ptr<Circle>> circles)
+{
+    return std::accumulate(circles.begin(),circles.end(),0.0,
+                                    [](double a,auto b){return a + b.get()->GetRadius();});  
+}
+
 int main()
 {
-    std::srand(std::time(NULL));
     int count = 10;
     //2
     auto curves = CreateRandomCurves(count);
@@ -111,17 +81,15 @@ int main()
                         [](auto s){return std::dynamic_pointer_cast<Circle>(s);});
     std::cout << "Before sorting:\n";
     for(auto c: circles)
-        std::cout << c.get()->GetRadius() << "\n";
+        std::cout << c.get() << "\t" << c.get()->GetRadius() << "\n";
     std::cout << "\n";
     std::cout << "After sorting:\n";
-    std::sort(circles.begin(),circles.end(),
-                    [](auto a, auto b){return a.get()->GetRadius() < b.get()->GetRadius();});
+    SortByRaius(circles);
     for(auto c: circles)
-        std::cout << c.get()->GetRadius() << "\n";
+        std::cout << c.get() << "\t" << c.get()->GetRadius() << "\n";
     std::cout << "\n";
     //6   
-    double sum = std::accumulate(circles.begin(),circles.end(),0.0,
-                                    [](double a,auto b){return a + b.get()->GetRadius();});
+    double sum = ComputeSumOfRadii(circles);
     std::cout << "Compute the total sum of radii of all curves in the second container :  " << sum << "\n";
     return 0;
 }
