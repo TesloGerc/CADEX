@@ -64,6 +64,7 @@ std::vector<std::shared_ptr<Curve>> CreateRandomCurves(int count)
 
 void Print(const std::vector<std::shared_ptr<Curve>>& curves)
 {
+    std::cout << "Type\t\tAddress\t\t\tPoint (X, Y, Z)\t\t\t\tFirst Derivative [dxdt, dydt, dzdt]\n";
     for(const auto& c : curves)
     {
         const double t = std::numbers::pi / 4;
@@ -95,27 +96,32 @@ int main()
     //2
     auto curves = CreateRandomCurves(count);
     //3
+    std::cout << "Print coordinates of points and derivatives of all curves in the container at t=PI/4\n\n";
     Print(curves);
     std::cout << "\n";
     //4
+    std::cout << "Populate a second container that would contain only circles from the first container.\n\n";
     auto selected = SelectCircles(curves);
     Print(selected);
     std::cout << "\n";
     //5
+    std::cout << "Sort the second container in the ascending order of circles’ radii.\n\n";
     std::vector<std::shared_ptr<Circle>> circles(selected.size());
     std::transform(selected.begin(),selected.end(),circles.begin(),
                         [](auto s){return std::dynamic_pointer_cast<Circle>(s);});
+    std::cout << "Before sorting:\n";
     for(auto c: circles)
         std::cout << c.get()->GetRadius() << "\n";
     std::cout << "\n";
+    std::cout << "After sorting:\n";
     std::sort(circles.begin(),circles.end(),
                     [](auto a, auto b){return a.get()->GetRadius() < b.get()->GetRadius();});
     for(auto c: circles)
         std::cout << c.get()->GetRadius() << "\n";
     std::cout << "\n";
-    //6
+    //6   
     double sum = std::accumulate(circles.begin(),circles.end(),0.0,
                                     [](double a,auto b){return a + b.get()->GetRadius();});
-    std::cout << sum << "\n";
+    std::cout << "Compute the total sum of radii of all curves in the second container :  " << sum << "\n";
     return 0;
 }

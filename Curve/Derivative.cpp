@@ -2,6 +2,6 @@
 
 std::ostream& operator<<(std::ostream& os, const Derivative& v) 
 {
-    os << "[ " << v.dxdt  << "," << v.dydt  << "," << v.dzdt << " ]";
+    os << "[ " << v.dxdt  << ",\t" << v.dydt  << ",\t" << v.dzdt << " ]";
     return os;
 }
