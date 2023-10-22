@@ -9,10 +9,12 @@
 
 #include <Curves.h>
 
+#ifdef TBB_FOUND
 #include "RadiusParallelSummator.h"
 
 #include <tbb/blocked_range.h>
 #include <tbb/parallel_reduce.h>
+#endif
 
 std::unique_ptr<curves::Curve> MakeRandomCurve(int type_id) noexcept 
 {
@@ -84,6 +86,7 @@ void SortByRaius(std::vector<std::shared_ptr<curves::Circle>>& circles)
                     [](auto a, auto b){return a.get()->GetRadius() < b.get()->GetRadius();});
 }
 
+#ifdef TBB_FOUND
 double ComputeSumOfRadii(const std::vector<std::shared_ptr<curves::Circle>> &circles)
 {
     RadiusParallelSummator summator(circles);
@@ -91,6 +94,14 @@ double ComputeSumOfRadii(const std::vector<std::shared_ptr<curves::Circle>> &cir
                         summator);
     return summator.getSum();
 }
+#else
+double ComputeSumOfRadii(const std::vector<std::shared_ptr<curves::Circle>> &circles)
+{
+      return std::accumulate( circles.begin(), circles.end(), 0.,
+                                [](double sum, std::shared_ptr<curves::Circle> c)
+                                { return sum + c.get()->GetRadius();});
+}
+#endif
 
 int main()
 {

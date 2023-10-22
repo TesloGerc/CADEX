@@ -1,3 +1,5 @@
+#ifdef TBB_FOUND
+
 #include <vector>
 #include <memory>
 
@@ -25,3 +27,4 @@ private:
     const std::vector<std::shared_ptr<curves::Circle>>& circles;
     double sum;
 };
+#endif
