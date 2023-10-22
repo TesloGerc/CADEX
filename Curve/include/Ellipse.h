@@ -16,6 +16,9 @@ public:
     virtual Derivative GetFirstDerivative(double t) const noexcept override;
     virtual CURVE_TYPE GetType() const noexcept override;
     constexpr virtual const char* GetTypeName() const noexcept override;
+
+    double GetXRadius() {return xRadius;};
+    double GetYRadius() {return yRadius;};
 private:
     double xRadius;
     double yRadius;

@@ -1,25 +1,21 @@
 #pragma once
 
-#include "Curve.h"
+#include "Ellipse.h"
 
 namespace curves
 {
 
-class Circle : public Curve
+class Circle : public Ellipse
 {
 public:
 
     // Radius should be positive
-    explicit Circle(double r);
+    explicit Circle(double r) : Ellipse(r,r){};
 
-    virtual Point GetPoint(double t) const noexcept override;
-    virtual Derivative GetFirstDerivative(double t) const noexcept override;
     virtual CURVE_TYPE GetType() const noexcept override;
     constexpr virtual const char* GetTypeName() const noexcept override;
 
-    double GetRadius() {return radius;};
-private:
-    double radius;
+    double GetRadius() {return GetXRadius();};
 };
 
 }

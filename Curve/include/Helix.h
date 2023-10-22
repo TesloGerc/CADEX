@@ -3,6 +3,7 @@
 #include <numbers>
 
 #include "Curve.h"
+#include "Circle.h"
 
 namespace curves
 {
@@ -12,14 +13,14 @@ namespace curves
     class Helix : public Curve
     {
     public:
-        Helix(double r, double s);
+        Helix(double r, double s) : circle(r), step(s){};
 
         virtual Point GetPoint(double t) const noexcept override;
         virtual Derivative GetFirstDerivative(double t) const noexcept override;
         virtual CURVE_TYPE GetType() const noexcept override;
         constexpr virtual const char* GetTypeName() const noexcept override;
     private:
-        double radius;
+        Circle circle;
         double step;
     };
 

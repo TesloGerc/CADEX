@@ -5,31 +5,18 @@
 namespace curves
 {
 
-Helix::Helix(double r, double s)
-{
-    if(r <= 0)
-        throw RadiusException{"Try create circle with negative radius"};
-
-    radius = r;
-    step = s;
-}
-
 Point Helix::GetPoint(double t) const noexcept 
 {
-    // no idea how to error handling
-    double x = radius * std::cos(t);
-    double y = radius * std::sin(t);
+    Point circlePoint = circle.GetPoint(t);
     double z = step * (t/curves::PI2);
-  return Point(x,y,z);
+  return Point(circlePoint.GetX(),circlePoint.GetY(),z);
 }
 
 Derivative Helix::GetFirstDerivative(double t) const noexcept 
 {
-  double dxdt = - radius * std::sin(t);
-  double dydt = radius * std::cos(t);
-  double dzdt = step/curves::PI2;
-
-  return Derivative(dxdt,dydt,dzdt);
+    Derivative circleDer = circle.GetPoint(t);
+    double dzdt = step * (t/curves::PI2);
+    return Derivative(circleDer.GetX(),circleDer.GetY(),dzdt);
 }
 
 CURVE_TYPE Helix::GetType() const noexcept 
