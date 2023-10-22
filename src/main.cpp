@@ -7,10 +7,7 @@
 #include <string>
 #include <ctime>
 
-#include "../Curve/include/Circle.h"
-#include "../Curve/include/Ellipse.h"
-#include "../Curve/include/Helix.h"
-#include "../Curve/include/Utils.h"
+#include <Curves.h>
 
 std::vector<std::shared_ptr<Curve>> CreateRandomCurves(int count)
 {
