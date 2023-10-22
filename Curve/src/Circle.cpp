@@ -13,7 +13,7 @@ Circle::Circle(double r)
     radius = r;
 }
 
-constexpr Point Circle::GetPoint(double t) const noexcept 
+Point Circle::GetPoint(double t) const noexcept 
 {
     // no idea how to error handling
     double x = radius * std::cos(t);
@@ -21,7 +21,7 @@ constexpr Point Circle::GetPoint(double t) const noexcept
   return Point(x,y);
 }
 
-constexpr Derivative Circle::GetFirstDerivative(double t) const noexcept 
+Derivative Circle::GetFirstDerivative(double t) const noexcept 
 {
   double dxdt = - radius * std::sin(t);
   double dydt = radius * std::cos(t);
@@ -30,7 +30,7 @@ constexpr Derivative Circle::GetFirstDerivative(double t) const noexcept
   return Derivative(dxdt,dydt,dzdt);
 }
 
-constexpr CURVE_TYPE Circle::GetType() const noexcept 
+CURVE_TYPE Circle::GetType() const noexcept 
 { 
   return CURVE_TYPE::CIRCLE; 
 }

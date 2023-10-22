@@ -15,7 +15,6 @@ add_library(Curve SHARED
                             include/RadiusException.h
 
                             src/Circle.cpp
-                            src/Derivative.cpp
                             src/Ellipse.cpp
                             src/Helix.cpp
                             src/Point.cpp

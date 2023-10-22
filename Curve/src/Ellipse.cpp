@@ -14,7 +14,7 @@ Ellipse::Ellipse(double rx, double ry)
     yRadius = ry;
 }
 
-constexpr Point Ellipse::GetPoint(double t) const noexcept 
+Point Ellipse::GetPoint(double t) const noexcept 
 {
     // no idea how to error handling
     double x = xRadius * std::cos(t);
@@ -22,7 +22,7 @@ constexpr Point Ellipse::GetPoint(double t) const noexcept
   return Point(x,y);
 }
 
-constexpr Derivative Ellipse::GetFirstDerivative(double t) const noexcept 
+Derivative Ellipse::GetFirstDerivative(double t) const noexcept 
 {
   double dxdt = - xRadius * std::sin(t);
   double dydt = yRadius * std::cos(t);
@@ -31,7 +31,7 @@ constexpr Derivative Ellipse::GetFirstDerivative(double t) const noexcept
   return Derivative(dxdt,dydt,dzdt);
 }
 
-constexpr CURVE_TYPE Ellipse::GetType() const noexcept 
+CURVE_TYPE Ellipse::GetType() const noexcept 
 { 
   return CURVE_TYPE::ELLIPSE; 
 }
