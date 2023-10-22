@@ -1,6 +1,9 @@
 #pragma once
 #include <iostream>
 
+namespace curves
+{
+
 class Derivative
 {
 public:
@@ -15,3 +18,5 @@ public:
 private:
     double dxdt,dydt,dzdt;    
 };
+
+}

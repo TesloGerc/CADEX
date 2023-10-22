@@ -1,10 +1,15 @@
 #include <string>
 
+namespace curves
+{
+
 class RadiusException
 {
 public: 
-    RadiusException(std::string message): message{message}{}
+    explicit RadiusException(const std::string& message): message{message}{}
     std::string getMessage() const {return message;}
 private:
     std::string message;
 };
+
+}

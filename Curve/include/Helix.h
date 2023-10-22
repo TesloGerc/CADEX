@@ -1,17 +1,26 @@
 #pragma once
 
+#include <numbers>
+
 #include "Curve.h"
 
-class Helix : public Curve
+namespace curves
 {
-public:
-    Helix(double r, double step);
 
-    constexpr virtual Point GetPoint(double t) const noexcept override;
-    constexpr virtual Derivative GetFirstDerivative(double t) const noexcept override;
-    constexpr virtual CURVE_TYPE GetType() const noexcept override;
-    constexpr virtual const char* GetTypeName() const noexcept;
-private:
-    double radius;
-    double step;
-};
+    const double PI2 = std::numbers::pi * 2;
+
+    class Helix : public Curve
+    {
+    public:
+        Helix(double r, double s);
+
+        constexpr virtual Point GetPoint(double t) const noexcept override;
+        constexpr virtual Derivative GetFirstDerivative(double t) const noexcept override;
+        constexpr virtual CURVE_TYPE GetType() const noexcept override;
+        constexpr virtual const char* GetTypeName() const noexcept override;
+    private:
+        double radius;
+        double step;
+    };
+
+}

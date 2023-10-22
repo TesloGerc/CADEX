@@ -2,6 +2,9 @@
 
 #include <iostream>
 
+namespace curves
+{
+
 class Point
 {
 public:
@@ -17,3 +20,5 @@ public:
 private:
     double x,y,z;
 };
+
+}

@@ -14,49 +14,77 @@
 #include <tbb/blocked_range.h>
 #include <tbb/parallel_reduce.h>
 
-std::vector<std::shared_ptr<Curve>> CreateRandomCurves(int count)
+std::unique_ptr<curves::Curve> MakeRandomCurve(int type_id) noexcept 
 {
-    std::srand(std::time(NULL));
-    std::vector<std::shared_ptr<Curve>> curves(count);
+    std::mt19937 gen(std::random_device{}());
+    //Random small numbers for distribution
+    std::uniform_real_distribution<double> dist(0.1, 40);
+
+    switch (type_id)
+    {
+    case curves::CURVE_TYPE::CIRCLE:
+        return std::make_unique<curves::Circle>(dist(gen));
+        break;
+    case curves::CURVE_TYPE::ELLIPSE:
+        return std::make_unique<curves::Ellipse>(dist(gen),dist(gen));
+        break;
+    case curves::CURVE_TYPE::HELIX:
+        return std::make_unique<curves::Helix>(dist(gen),dist(gen));
+        break;
+    default:
+        return nullptr;
+        break;
+    } 
+}
+
+std::vector<std::shared_ptr<curves::Curve>> CreateRandomCurves(int count)
+{
+    std::mt19937 gen(std::random_device{}());
+
+    int CURVETYPE_COUNT = 3;
+    std::uniform_int_distribution<std::uint8_t> curve_dist(0, CURVETYPE_COUNT-1);
+
+    std::vector<std::shared_ptr<curves::Curve>> curves(count);
 
     for(auto& c : curves)
-        c = Utils::MakeCurve(std::rand()%3);
+        c = MakeRandomCurve(curve_dist(gen));
 
     return curves;
 }
 
-void Print(const std::vector<std::shared_ptr<Curve>>& curves)
+void Print(const std::vector<std::shared_ptr<curves::Curve>>& curves)
 {
     std::cout << "Type\t\tAddress\t\t\tPoint (X, Y, Z)\t\t\t\tFirst Derivative [dxdt, dydt, dzdt]\n";
     for(const auto& c : curves)
     {
         const double t = std::numbers::pi / 4;
-        std::cout << c.get()->GetTypeName() << "\t->\t" 
-                    << c.get() << "\t:\t"
+        std::cout << c.get()->GetTypeName() << "\t->  " 
+                    << c.get() << "  :  "
                     << c.get()->GetPoint(t) << "\t"
                     << c.get()->GetFirstDerivative(t)
                     << "\n";
     }
 }
 
-std::vector<std::shared_ptr<Curve>> SelectCircles(const std::vector<std::shared_ptr<Curve>>& curves)
+std::vector<std::shared_ptr<curves::Curve>> SelectCircles(const std::vector<std::shared_ptr<curves::Curve>>& curves)
 {
-    std::vector<std::shared_ptr<Curve>> circles;
+    std::vector<std::shared_ptr<curves::Curve>> circles;
+
     for(const auto& c : curves)
     {
-        if(c.get()->GetType() == CURVE_TYPE::CIRCLE)
+        if(c.get()->GetType() == curves::CURVE_TYPE::CIRCLE)
             circles.push_back(c);
     }
     return circles;
 }
 
-void SortByRaius(std::vector<std::shared_ptr<Circle>>& circles)
+void SortByRaius(std::vector<std::shared_ptr<curves::Circle>>& circles)
 {
     std::sort(circles.begin(),circles.end(),
                     [](auto a, auto b){return a.get()->GetRadius() < b.get()->GetRadius();});
 }
 
-double ComputeSumOfRadii(const std::vector<std::shared_ptr<Circle>> &circles)
+double ComputeSumOfRadii(const std::vector<std::shared_ptr<curves::Circle>> &circles)
 {
     RadiusParallelSummator summator(circles);
     tbb::parallel_reduce(tbb::blocked_range<size_t>(0, std::size(circles)),
@@ -82,9 +110,9 @@ int main()
     std::cout << "\n";
     //5
     std::cout << "Sort the second container in the ascending order of circles’ radii.\n\n";
-    std::vector<std::shared_ptr<Circle>> circles(selected.size());
+    std::vector<std::shared_ptr<curves::Circle>> circles(selected.size());
     std::transform(selected.begin(),selected.end(),circles.begin(),
-                        [](auto s){return std::dynamic_pointer_cast<Circle>(s);});
+                        [](auto s){return std::dynamic_pointer_cast<curves::Circle>(s);});
     std::cout << "Before sorting:\n";
     for(auto c: circles)
         std::cout << c.get() << "\t" << c.get()->GetRadius() << "\n";

@@ -8,7 +8,7 @@
 class RadiusParallelSummator
 {
 public:
-  explicit RadiusParallelSummator(const std::vector<std::shared_ptr<Circle>>& circles) : circles(circles), sum(0.) {}
+  explicit RadiusParallelSummator(const std::vector<std::shared_ptr<curves::Circle>>& circles) : circles(circles), sum(0.) {}
 
   RadiusParallelSummator(const RadiusParallelSummator &a, tbb::split) : RadiusParallelSummator(a.circles) {}
 
@@ -22,6 +22,6 @@ public:
     }
   }
 private:
-    const std::vector<std::shared_ptr<Circle>>& circles;
+    const std::vector<std::shared_ptr<curves::Circle>>& circles;
     double sum;
 };

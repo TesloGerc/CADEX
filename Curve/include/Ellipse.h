@@ -2,6 +2,9 @@
 
 #include "Curve.h"
 
+namespace curves
+{
+
 class Ellipse : public Curve
 {
 public:
@@ -12,8 +15,10 @@ public:
     constexpr virtual Point GetPoint(double t) const noexcept override;
     constexpr virtual Derivative GetFirstDerivative(double t) const noexcept override;
     constexpr virtual CURVE_TYPE GetType() const noexcept override;
-    constexpr virtual const char* GetTypeName() const noexcept;
+    constexpr virtual const char* GetTypeName() const noexcept override;
 private:
     double xRadius;
     double yRadius;
 };
+
+}

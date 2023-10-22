@@ -5,6 +5,9 @@
 #include "Point.h"
 #include "Derivative.h"
 
+namespace curves
+{
+
 enum CURVE_TYPE
 {
     CIRCLE = 0,
@@ -22,5 +25,5 @@ public:
     constexpr virtual const char* GetTypeName() const noexcept = 0;
 };
 
-
+}
 

@@ -13,14 +13,12 @@ add_library(Curve SHARED
                             include/Helix.h
                             include/Point.h
                             include/RadiusException.h
-                            include/Utils.h
 
                             src/Circle.cpp
                             src/Derivative.cpp
                             src/Ellipse.cpp
                             src/Helix.cpp
                             src/Point.cpp
-                            src/Utils.cpp
                             )
 
 target_include_directories(Curve PUBLIC include)

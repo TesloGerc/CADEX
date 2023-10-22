@@ -2,6 +2,9 @@
 
 #include "../include/RadiusException.h"
 
+namespace curves
+{
+
 Ellipse::Ellipse(double rx, double ry)
 {
     if(rx <= 0 || ry <= 0)
@@ -36,4 +39,6 @@ constexpr CURVE_TYPE Ellipse::GetType() const noexcept
 constexpr const char* Ellipse::GetTypeName() const noexcept
 {
   return "Ellipse";
+}
+
 }
