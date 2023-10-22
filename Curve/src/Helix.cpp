@@ -1,6 +1,6 @@
-#include "Helix.h"
+#include "../include/Helix.h"
 
-#include "RadiusException.h"
+#include "../include/RadiusException.h"
 
 Helix::Helix(double r, double step)
 {

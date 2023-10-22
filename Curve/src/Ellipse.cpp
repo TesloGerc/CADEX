@@ -1,6 +1,6 @@
-#include "Ellipse.h"
+#include "../include/Ellipse.h"
 
-#include "RadiusException.h"
+#include "../include/RadiusException.h"
 
 Ellipse::Ellipse(double rx, double ry)
 {

@@ -1,4 +1,4 @@
-#include "Derivative.h"
+#include "../include/Derivative.h"
 
 std::ostream& operator<<(std::ostream& os, const Derivative& v) 
 {

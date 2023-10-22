@@ -6,13 +6,13 @@ set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 add_executable(CADEX 
-                                  main.cpp
-                                  Curve/Circle.cpp
-                                  Curve/Ellipse.cpp
-                                  Curve/Helix.cpp
-                                  Curve/Point.cpp
-                                  Curve/Derivative.cpp
-                                  Curve/Utils.cpp
+                                  src/main.cpp
+                                  Curve/src/Circle.cpp
+                                  Curve/src/Ellipse.cpp
+                                  Curve/src/Helix.cpp
+                                  Curve/src/Point.cpp
+                                  Curve/src/Derivative.cpp
+                                  Curve/src/Utils.cpp
                                   )
 
 target_compile_options(CADEX PRIVATE
