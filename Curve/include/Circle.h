@@ -13,7 +13,7 @@ public:
     constexpr virtual Derivative GetFirstDerivative(double t) const noexcept override;
     constexpr virtual CURVE_TYPE GetType() const noexcept override;
 
-    constexpr double GetRadius() {return radius;};
+    double GetRadius() {return radius;};
     constexpr virtual const char* GetTypeName() const noexcept;
 private:
     double radius;

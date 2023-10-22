@@ -9,6 +9,11 @@
 
 #include <Curves.h>
 
+#include "RadiusParallelSummator.h"
+
+#include <tbb/blocked_range.h>
+#include <tbb/parallel_reduce.h>
+
 std::vector<std::shared_ptr<Curve>> CreateRandomCurves(int count)
 {
     std::srand(std::time(NULL));
@@ -51,15 +56,19 @@ void SortByRaius(std::vector<std::shared_ptr<Circle>>& circles)
                     [](auto a, auto b){return a.get()->GetRadius() < b.get()->GetRadius();});
 }
 
-double ComputeSumOfRadii(std::vector<std::shared_ptr<Circle>> circles)
+double ComputeSumOfRadii(const std::vector<std::shared_ptr<Circle>> &circles)
 {
-    return std::accumulate(circles.begin(),circles.end(),0.0,
-                                    [](double a,auto b){return a + b.get()->GetRadius();});  
+    RadiusParallelSummator summator(circles);
+    tbb::parallel_reduce(tbb::blocked_range<size_t>(0, std::size(circles)),
+                        summator);
+    return summator.getSum();
 }
 
 int main()
 {
-    int count = 10;
+    std::cout << "Enter count of curves:\n";
+    int count;
+    std::cin >> count;
     //2
     auto curves = CreateRandomCurves(count);
     //3
